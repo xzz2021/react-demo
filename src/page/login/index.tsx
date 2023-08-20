@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 
+import './index.css'
+import LoginForm from "./login";
+
 export default class Login extends Component {
-    render() {
-        
+    render(): React.ReactNode {
         return (
-            <div >
-            登录组件
+            <div className="form_wrapper">
+                <LoginForm />
+
             </div>
-            
         )
-
-
     }
 
 }

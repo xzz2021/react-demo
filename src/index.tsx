@@ -6,6 +6,11 @@ import { RouterProvider } from "react-router-dom";
 // 引入自定义的路由
 import { router } from './router';
 
+
+
+
+
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
