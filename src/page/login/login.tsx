@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import { Link } from "react-router-dom";
 import { xzzlogin } from "../../api/userinfo";
 
@@ -15,9 +15,9 @@ type FieldType = {
     
     
  const LoginForm: React.FC = () => {
+  const [messageApi, contextHolder] = message.useMessage();
 
   const onFinish = async (forminfo: FieldType) => {
-    // console.log('Success:', forminfo);
     const {remember, ...account } = forminfo
     if(remember){
       localStorage.setItem('username', account.username)
@@ -28,21 +28,25 @@ type FieldType = {
     let res: any =  await xzzlogin(account)
     console.log("🚀 ~ file: login.tsx:21 ~ onFinish ~ res:", res)
     if(res.statusCode.toString().startsWith('2')){
-
+      // let authToken = res.access_token
+      // localStorage.setItem('authToken', authToken)
       console.log('响应成功!', res);
     }else{
-      
+      messageApi.error(res.error)
       console.log('响应失败!', res);
 
     }
 
   }
-  
+
   const onFinishFailed = (errorInfo: any) => {
     // console.log('Failed:', errorInfo);
   };
 
   return (
+    <>
+    {contextHolder}
+    
         <Form
           // name="basic"
           initialValues={{ remember: true }}
@@ -78,7 +82,9 @@ type FieldType = {
           </Form.Item>
       
           <Form.Item >
-            <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+            <Button type="primary" htmlType="submit" 
+            style={{width: '100%'}}
+            >
               登录
             </Button>
             <Link to='/register'>
@@ -89,6 +95,7 @@ type FieldType = {
             </Link>
           </Form.Item>
         </Form>
+        </>
 )
         }
 
