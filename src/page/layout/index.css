@@ -1,0 +1,10 @@
+/* 使内容高度100% */
+#root,body,html {
+    height: 99%;
+}
+
+.ant-layout{
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+}

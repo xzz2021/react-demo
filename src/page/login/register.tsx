@@ -10,14 +10,19 @@ type FieldType = {
   password: string;
 };
 
+// 子组件接收的props值的类型必须进行定义
+interface RegisterFormProps {
+  changeStatus?: Function,
+  [propName: string]: any;
 
+}
 
-const RegisterForm: React.FC = () => {
+const RegisterForm: React.FC<RegisterFormProps> = ({changeStatus}) => {
+console.log("🚀 ~ file: register.tsx:21 ~ changeStatus:", changeStatus)
 
   const [messageApi, contextHolder] = message.useMessage();
 
 const onFinish = async (forminfo: FieldType) => {
-  console.log("🚀 ~ file: register.tsx:16 ~ onFinish ~ forminfo:", forminfo);
 
   let res: any = await xzzRegister(forminfo);
 
@@ -35,7 +40,7 @@ const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
 };
 
-const checkName = (name: string) => {};
+// const checkName = (name: string) => {};
 
   return (
     <>
@@ -78,13 +83,13 @@ const checkName = (name: string) => {};
             >
               注册
             </Button>
-            <Link to="/login">
-              <div style={{ margin: "10px", float: "right" }}>
+            {/* <Link to="/login"> */}
+              <div style={{ margin: "10px", float: "right" }} onClick={() => changeStatus}>
                 去登录
                 {/* <a href="" >
       </a> */}
               </div>
-            </Link>
+            {/* </Link> */}
           </Form.Item>
         </Form>
       </div>

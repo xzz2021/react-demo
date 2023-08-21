@@ -1,24 +1,34 @@
 
 import React from 'react';
-// import ReactDOM from "react-dom";
-
-
-import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
-  } from "react-router-dom";
-import App from '../App';
-import Login from '../page/login';
-import Register from '../page/login/register';
+import { createBrowserRouter, Navigate } from "react-router-dom";
+// import Login from '../page/login';
+// import Register from '../page/login/register';
+import Home from '../page/home';
+import Users from '../page/users';
   
+
   export  const router = createBrowserRouter (
-    createRoutesFromElements(
-      <>
-        <Route path="/" element={<App />}></Route>
-        <Route path="/login" element={<Login />} ></Route>
-        <Route path="/register" element={<Register />} ></Route>
-      </>
-    )
+    [
+      {
+      path: '/',
+      element: <Navigate to="/home"/>
+    },
+    {
+      path: '/home',
+      element: <Home />,
+    },
+      {
+        path: '/users',
+        element: <Users />,
+      },
+    //   {
+    //     path: '/login',
+    //     element: <Login />,
+    //   },
+    
+    // {
+    //   path: '/register',
+    //   element: <Register />,
+    // }
+  ]
   )
-  

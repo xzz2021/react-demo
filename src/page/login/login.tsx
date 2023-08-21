@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { Link } from "react-router-dom";
 import { xzzlogin } from "../../api/userinfo";
+import RegisterForm from "./register";
 
 
 type FieldType = {
@@ -11,10 +12,24 @@ type FieldType = {
   remember: boolean;
 }
 
-
-    
-    
  const LoginForm: React.FC = () => {
+
+  let isLoginPage = true
+  const changePage = () => {
+    isLoginPage = !isLoginPage
+  }
+
+  const [xzzform] = Form.useForm();  // 获取表单实例
+
+  function setCurname(){
+    // 加载 记住的 用户名
+    let curUser = localStorage.getItem('username')
+    xzzform.setFieldsValue({ username: curUser, password: '' })
+  }
+useEffect(() =>{
+  // 生命周期函数
+  setCurname()
+}, [])
   const [messageApi, contextHolder] = message.useMessage();
 
   const onFinish = async (forminfo: FieldType) => {
@@ -28,8 +43,8 @@ type FieldType = {
     let res: any =  await xzzlogin(account)
     console.log("🚀 ~ file: login.tsx:21 ~ onFinish ~ res:", res)
     if(res.statusCode.toString().startsWith('2')){
-      // let authToken = res.access_token
-      // localStorage.setItem('authToken', authToken)
+      let authToken = res.access_token
+      localStorage.setItem('authToken', authToken)
       console.log('响应成功!', res);
     }else{
       messageApi.error(res.error)
@@ -40,15 +55,14 @@ type FieldType = {
   }
 
   const onFinishFailed = (errorInfo: any) => {
-    // console.log('Failed:', errorInfo);
   };
-
+  if(isLoginPage){
   return (
     <>
     {contextHolder}
-    
         <Form
-          // name="basic"
+          name="basic"
+          form={xzzform}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -87,16 +101,21 @@ type FieldType = {
             >
               登录
             </Button>
-            <Link to='/register'>
-            <div style={{margin: '10px', float: 'right'}}>
+            {/* <Link to='/register'> */}
+            <div style={{margin: '10px', float: 'right'}} onClick={changePage}>
             注册账号
             {/* <a href="" >注册账号</a> */}
             </div>
-            </Link>
+            {/* </Link> */}
           </Form.Item>
         </Form>
         </>
-)
+)}else{
+  return (
+  <RegisterForm 
+  changeStatus = { () => changePage }
+  />)
+}
         }
 
 export default LoginForm

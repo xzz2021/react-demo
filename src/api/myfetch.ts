@@ -29,7 +29,7 @@ let baseURL: string = 'http://localhost:3000/'
 }
 
 //配置认证的标准token
-let token = localStorage.getItem('token');
+let token = localStorage.getItem('authToken');
 if (token) inital.headers = Object.assign(inital.headers, {'Authorization': "bearer " + token})
 
 // 判断 是否是对象
