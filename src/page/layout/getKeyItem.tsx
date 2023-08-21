@@ -12,7 +12,7 @@ function getCurItemArr(menuArr: any[], key: string){
 }
 
 
-export const  getKeyitem = (menuArr: any[], keyArr: []) => {
+export const  getKeyitem1 = (menuArr: any[], keyArr: []) => {
        let newkeyArr = keyArr.reverse()
         let newItemArr: any[] = []
         keyArr.forEach((item,index)=> {
@@ -29,3 +29,16 @@ export const  getKeyitem = (menuArr: any[], keyArr: []) => {
         })
         return  newItemArr[0] || []
   }
+
+  //  使用递归进行简化
+
+  const  getKeyitem: any = (menuArr: any[], keyPath: any[]) => {
+    let lastKey = keyPath.slice(-1)
+    let itemArr = menuArr.filter(item => item.key == lastKey) 
+    if(keyPath.length == 1) return itemArr[0] || {}
+        let childArr = itemArr[0].children
+    return childArr ? getKeyitem(childArr, keyPath.slice(0,-1)): {}
+  }
+
+
+  export { getKeyitem } 

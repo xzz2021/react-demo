@@ -17,8 +17,7 @@ interface RegisterFormProps {
 
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({changeStatus}) => {
-console.log("🚀 ~ file: register.tsx:21 ~ changeStatus:", changeStatus)
+const RegisterForm: React.FC<RegisterFormProps> = (props: any) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -84,7 +83,7 @@ const onFinishFailed = (errorInfo: any) => {
               注册
             </Button>
             {/* <Link to="/login"> */}
-              <div style={{ margin: "10px", float: "right" }} onClick={() => changeStatus}>
+              <div style={{ margin: "10px", float: "right", cursor: 'pointer' }} onClick={() =>props.changeStatus()}>
                 去登录
                 {/* <a href="" >
       </a> */}

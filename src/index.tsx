@@ -1,11 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import reportWebVitals from './reportWebVitals';
-import App from './page/layout';
-
-
-
-
+import { BrowserRouter, RouterProvider } from 'react-router-dom';
+import App from './App';
 
 
 const root = ReactDOM.createRoot(
@@ -13,12 +9,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-     {/* 注入路由 */}
+     {/* 注入路由  顶层包裹路由， 避免hook调用bug */}
+     <BrowserRouter>   
      <App />
+     </BrowserRouter>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
