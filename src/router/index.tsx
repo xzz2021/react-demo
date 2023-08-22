@@ -1,43 +1,64 @@
 
 import React from 'react';
-import { createBrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-// import Login from '../page/login';
-// import Register from '../page/login/register';
+import { createBrowserRouter, Link, Navigate } from "react-router-dom";
 import Home from '../page/home';
 import Users from '../page/users';
 import Profile from '../page/profile';
+import NotFound from '../page/error';
+import LayoutApp from '../page/layout';
+import Login from '../page/login';
   
 
-  export  const router2 = createBrowserRouter (
-    [
-      {
+  export  const router = createBrowserRouter (
+    [{
+      path: '/',
+      element: <LayoutApp/>,
+      children: [
+        {
+          path: '/home',
+          element: <Home />
+        },
+        {
+          path: '/users',
+          element: <Users />
+        },
+        {
+          path: '/profile',
+          element: <Profile />
+        },
+        {
+          path: '*',
+          element: <NotFound />,
+        },
+        {
+          path: '/test',
+          element: <NotFound />,
+        },
+      ]
+    },
+    {
       path: '/',
       element: <Navigate to="/home"/>
     },
+    // {
+    //   path: '*',
+    //   element: <NotFound />,
+    // },
     {
-      path: '/home',
-      element: <Home />,
-    },
-      {
-        path: '/users',
-        element: <Users />,
-      },
-      {
-        path: '/profile',
-        element: <Profile />,
-      }
+      path: 'login',
+      element: <Login />,
+    }
   ]
   )
 
-  export  const Myrouter = () => {
+  export  const MyrouterLink = () => {
 
     return (
-
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/users" element={<Users />} />
-                <Route path="/profile" element={<Profile />} />
-            </Routes>
+            <>
+            <Link to='/users' />
+            <Link to='/home' />
+            <Link to='/profile' />
+            </>
     )
   }
 

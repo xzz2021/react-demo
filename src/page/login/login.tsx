@@ -18,7 +18,7 @@ interface RegisterFormProps {
 
 }
 const LoginForm: React.FC<RegisterFormProps> = (props: any) => {
-console.log("🚀 ~ file: login.tsx:21 ~ props:", props)
+// console.log("🚀 ~ file: login.tsx:21 ~ props:", props)
 
   const [xzzform] = Form.useForm();  // 获取表单实例
 
