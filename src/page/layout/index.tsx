@@ -8,7 +8,6 @@ import  { getMenuPromise } from './getMenu'
 import './index.css'
 import { getKeyitem } from './getKeyItem';
 import { getAllPath } from './getAllPath';
-import Loading from '../loading';
 const { Header, Sider, Content } = Layout;
 
 
@@ -20,6 +19,8 @@ const LayoutApp: React.FC = () => {
   useEffect(() => {
     getMenuPromise().then( (res: any) => {
       if(menuItems.length == 0){
+        // let newMenu: any = loopMenuIcon(res)
+        // console.log("🚀 ~ file: index.tsx:27 ~ getMenuPromise ~ res:", newMenu)
         //  设定菜单后,页面重新渲染, 导致 effect又重新请求,然后不断死循环渲染
         //  所以需要加一个flag进行拦截处理, 避免 数据  重复 变更
         setMenuItems(res)
@@ -108,5 +109,7 @@ if (matches.length && !allPath.some(path => matches[matches.length - 1].pathname
 }
 
 export default LayoutApp;
+
+
 
 

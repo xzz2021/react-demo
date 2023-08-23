@@ -30,8 +30,10 @@ const App: React.FC =  () => {
 // <Route path="/" element={<LayoutApp />} />
 // </Routes>
 //     </>
+<>
+
 <RouterProvider router={router} />
-    
+</>
 
   )
 
