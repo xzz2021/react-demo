@@ -1,15 +1,17 @@
 
-import React from 'react';
+import React, { lazy } from 'react';
 import { createBrowserRouter, Link, Navigate } from "react-router-dom";
-import Home from '../page/home';
-import Users from '../page/users';
-import Profile from '../page/profile';
-import NotFound from '../page/error';
+// import Home from '../page/home';
 import LayoutApp from '../page/layout';
-import Login from '../page/login';
-import Roles from '../page/roles';
-import Permissions from '../page/permissions';
-import Menus from '../page/menus';
+
+
+// import Users from '../page/users';
+// import Profile from '../page/profile';
+// import NotFound from '../page/error';
+// import Login from '../page/login';
+// import Roles from '../page/roles';
+// import Permissions from '../page/permissions';
+// import Menus from '../page/menus';
 
 
 // let allEntities2 = [path.resolve(__dirname,'src/page/*/index.tsx',)]
@@ -23,36 +25,51 @@ import Menus from '../page/menus';
       children: [
         {
           path: '/home',
-          element: <Home />,
+          // element: <Home />,
+          Component: lazy(()=> import('../page/home'))
           
         },
         {
           path: '/users',
-          element: <Users />
+          // element: <Users />,
+          Component: lazy(()=> import('../page/users'))
+
         },
         {
           path: '/roles',
-          element: <Roles />
+          // element: <Roles />,
+          Component: lazy(()=> import('../page/roles'))
+
         },
         {
           path: '/menus',
-          element: <Menus />
+          // element: <Menus />,
+          Component: lazy(()=> import('../page/menus'))
+
         },
         {
           path: '/permissions',
-          element: <Permissions />
+          // element: <Permissions />,
+          Component: lazy(()=> import('../page/permissions'))
+
         },
         {
           path: '/profile',
-          element: <Profile />
+          // element: <Profile />,
+          Component: lazy(()=> import('../page/profile'))
+
         },
         {
           path: '*',
-          element: <NotFound />,
+          // element: <NotFound />,
+          Component: lazy(()=> import('../page/error'))
+
         },
         {
           path: '/test',
-          element: <NotFound />,
+          // element: <NotFound />,
+          Component: lazy(()=> import('../page/error'))
+
         },
       ]
     },
@@ -66,7 +83,9 @@ import Menus from '../page/menus';
     // },
     {
       path: 'login',
-      element: <Login />,
+      // element: <Login />,
+      Component: lazy(()=> import('../page/login'))
+
     }
   ]
   )

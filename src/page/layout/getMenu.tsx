@@ -61,7 +61,7 @@ export const getMenuPromise =  () => {
             }]
           }
         ]
-      ), 1000)
+      ), 200)
   })
 
 }

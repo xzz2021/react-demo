@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
@@ -8,6 +8,7 @@ import  { getMenuPromise } from './getMenu'
 import './index.css'
 import { getKeyitem } from './getKeyItem';
 import { getAllPath } from './getAllPath';
+import Loading from '../loading';
 const { Header, Sider, Content } = Layout;
 
 
@@ -33,6 +34,7 @@ const LayoutApp: React.FC = () => {
   })
   
   const [collapsed, setCollapsed] = useState(false);
+  const [curRoute, setCurRoute] = useState(['1']);
 
   // const { token: { colorBgContainer }, } = theme.useToken();
   let colorBgContainer = '#ffffff'
@@ -40,9 +42,11 @@ const LayoutApp: React.FC = () => {
 
   const navigate = useNavigate()
 const getCurrentItem = (clickItem: any) => {
-  let currentItem = getKeyitem(menuItems,clickItem.keyPath)
+  let curPath = clickItem.keyPath
+  let currentItem = getKeyitem(menuItems,curPath)
   let curRoute = currentItem.path
   if(curRoute){
+    setCurRoute(clickItem.keyPath)
     navigate(curRoute)
   }
 }
@@ -64,8 +68,8 @@ if (matches.length && !allPath.some(path => matches[matches.length - 1].pathname
         <Menu
           theme="light"
           mode="inline"
-          defaultSelectedKeys={['1']}
-          // selectedKeys={[pathname]}
+          // defaultSelectedKeys={ curRoute }
+          selectedKeys={ curRoute }
           items={menuItems}
           onClick={getCurrentItem }
         />
@@ -99,7 +103,10 @@ if (matches.length && !allPath.some(path => matches[matches.length - 1].pathname
                 <Link to='*' /> */}
 
                 {/* 路由占位符, 从而navigate能够使用 */}
+                {/* 因为使用了懒加载,所以必须用suspense进行包裹 */}
+                <Suspense fallback={<Loading />}>
                 <Outlet />
+                </Suspense>
 
         </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>

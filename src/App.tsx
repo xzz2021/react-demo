@@ -1,27 +1,30 @@
 //  定义总入口，并在此处拦截权限
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import LayoutApp from './page/layout';
-import { Route, RouterProvider, Routes } from 'react-router-dom';
+import { Await, Route, RouterProvider, Routes, useLoaderData } from 'react-router-dom';
 import Login from './page/login';
 import { router } from './router';
+import Loading from './page/loading';
 
 
 
 const App: React.FC =  () => {
 
-  // const [isLogin, setIsLogin] = useState(false)
-  // useEffect(() =>{
-  //   xzzGetinfo().then(res=> {
-  //     setIsLogin(res)
-      
-  //   })
-  // })
-  // if(isLogin){
-  //   return <LayoutApp/>
-  // }else{
-  //   return <Login />
-  // }
+
+//   const { reviews } = useLoaderData();
+  
+//   <Suspense fallback={<Loading />}>
+//   <Await
+//     resolve={reviews}
+//     errorElement={
+//       <div>Could not load reviews 😬</div>
+//     }
+//     children={(resolvedReviews) => (
+//       <Reviews items={resolvedReviews} />
+//     )}
+//   />
+// </Suspense>
   
   return (
 //     <>
@@ -32,7 +35,7 @@ const App: React.FC =  () => {
 //     </>
 <>
 
-<RouterProvider router={router} />
+{/* <RouterProvider router={router} /> */}
 </>
 
   )

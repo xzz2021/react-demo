@@ -132,7 +132,9 @@ config = {
         resolve(res)
 
 }).catch((reason) => {
-
+    if(reason.includes('Failed to fetch')){
+        reject('网络接口请求异常: 接口不存在或者未开启')
+    }
     reject("网络接口请求异常-------具体原因是:"+ reason)
 
 })

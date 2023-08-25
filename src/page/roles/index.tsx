@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import RolesTable from './table';
+import Addrole from './addrole';
 
-function Roles() {
+
+// function Roles() {
+  const Roles:React.FC = () => {
+    
+  const event = useRef()
+
   return (
     < >
-      <div>RolesRolesRolesRoles</div>
+      {/* <Addrole  triggerFn = { event }/>
+      <RolesTable getChildFn = { event } /> */}
+       <Addrole  triggerFn = { event }/>
+      <RolesTable getChildFn = { event } />
     </>
   );
 }

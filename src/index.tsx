@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 
 
 const root = ReactDOM.createRoot(
@@ -10,7 +12,9 @@ root.render(
   <>
   {/* <React.StrictMode> */}
      {/* 注入路由  顶层包裹路由， 避免hook调用bug */}
-     <App />
+     <RouterProvider router={router} />
+     {/* <App /> */}
+
   {/* </React.StrictMode> */}
   </>
 );
