@@ -12,3 +12,9 @@ export const getrole = async () => {
     let res = await xzzfetch('roles/getall', {method: 'get'})
     return res
 }
+
+
+export const deleterole = async (id: any) => {
+    let res = await xzzfetch(`roles/${id}`, {method: 'delete'})
+    return res
+}

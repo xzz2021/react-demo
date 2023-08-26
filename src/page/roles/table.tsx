@@ -1,41 +1,18 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { Space, Table } from 'antd';
+import { Popconfirm, Space, Table, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { getrole } from '../../api/role';
+import { deleterole, getrole } from '../../api/role';
 
 interface DataType {
   key: string;
   name: string;
 }
 
-const columns: ColumnsType<DataType> = [
-  { 
-    title: '角色名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '操作',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>修改</a>
-        <a style={{color: 'red' }}>删除</a>
-      </Space>
-    ),
-  },
-];
-
-// const data: DataType[] = [
-//   { 
-//     key: '1',
-//     name: '超级管理员',
-//   }
-// ];
 
 const RolesTable = (props:{getChildFn: any}) => {
 
   let [tableData, setTableData] = useState([])
+  const [messageApi, contextHolder] = message.useMessage();
 
   const getAllRoles = async () => {
     
@@ -57,9 +34,46 @@ useImperativeHandle(getChildFn,()=>({
   getAllRoles
 }))
 
+const columns: ColumnsType<DataType> = [
+  { 
+    title: '角色名',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: '操作',
+    key: 'action',
+    render: (_, record: { key: React.Key }) =>
+    tableData.length >= 1 ? (
+      <Space size="middle">
+        <a>修改</a>
+          <Popconfirm title="确定删除?" onConfirm={() => handleDelete(record.key)}>
+            <a style={ {color: 'red'}}>删除</a>
+          </Popconfirm>
+      </Space>
+
+        ) : null,
+  },
+];
+  const handleDelete = async (key: any) => {
+    let res: any =  await deleterole(key)
+    if(res.statusCode == 200) {
+      messageApi.open({
+        type: 'success',
+        content: '删除成功!'
+      });
+      getAllRoles()
+      
+    }
+
+  }
+
 return (
+<>
+{contextHolder}
 
 <Table columns={columns} dataSource={tableData} />
+</>
 
 )
 }

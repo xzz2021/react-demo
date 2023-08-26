@@ -26,7 +26,11 @@ const Addrole = (props: { triggerFn: any}) => {
          setIsModalOpen(false);
          triggerBroFn()
             setInputValue('')
-
+        }else{
+          messageApi.open({
+            type: 'error',
+            content: '新增失败,接口异常,请重试!'
+          });
         }
     };
   

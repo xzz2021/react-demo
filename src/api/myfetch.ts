@@ -77,13 +77,13 @@ if (body != null) {
 if (typeof url !== "string") throw new TypeError( ` ${url} is not an string! ` )
 if (!/^http(s?):\/\//i.test(url)) url = baseURL + url //判断是不是以http或者https开头,如果不是,就用baseurl拼起来
 
-// 不转换param 数据===========
-// if (params != null) {
-//     if (isPlainObject(params)) {
-//         params = qs.stringify(params)
-//     }
-//     url +=  `${url.includes('?')?'&':'?'}${params}` ;//拼接
-// }
+// 转换param 数据===========
+if (params != null) {
+    if (isPlainObject(params)) {
+        params = qs.stringify(params)
+    }
+    url +=  `${url.includes('?')?'&':'?'}${params}` ;//拼接
+}
 
 
 
@@ -102,6 +102,8 @@ config = {
 //-----------------------配置代理url-------------------manifest.json的match配置对应的接口域名,则不需要代理服务器-----
 //  let url2 = `http://xzz2022.top:666/${url}`
  fetch(url, config).then((response) => {
+    // console.log("🚀 ~ file: myfetch.ts:105 ~ fetch ~ config:", config)
+    // console.log("🚀 ~ file: myfetch.ts:105 ~ fetch ~ url:", url)
     // console.log('response: ', response);
     let { status, statusText, ok } = response;
 
@@ -132,9 +134,9 @@ config = {
         resolve(res)
 
 }).catch((reason) => {
-    if(reason.includes('Failed to fetch')){
-        reject('网络接口请求异常: 接口不存在或者未开启')
-    }
+    // if(reason.includes('Failed to fetch')){
+    //     reject('网络接口请求异常: 接口不存在或者未开启')
+    // }
     reject("网络接口请求异常-------具体原因是:"+ reason)
 
 })
