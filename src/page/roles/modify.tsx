@@ -1,18 +1,17 @@
 import {  Button, Input, Modal, message } from 'antd';
 import React, { useEffect, useImperativeHandle, useState } from 'react';
-import { addrole, getrole } from '../../api/role';
+import { addrole, getrole, modifyrole } from '../../api/role';
 
 
-const ModifyRole = (props: { triggerFn: any }) => {
+const ModifyRole = (props: { triggerFn: any, setIsModalOpen: Function, isModalOpen: any, inputValue: string, setInputValue: Function, curIndex: any }) => {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    let [inputValue, setInputValue] = useState('')
+    let { inputValue, setInputValue, curIndex } = props
     const [messageApi, contextHolder] = message.useMessage();
 
    
     const showModal = () => {
         // 打开面板
-      setIsModalOpen(true);
+      props.setIsModalOpen(true);
     };
   
     const handleOk = async () => {
@@ -20,21 +19,22 @@ const ModifyRole = (props: { triggerFn: any }) => {
             type: 'error',
             content: '角色名不能为空!',
           });
-        let res: any = await addrole({name: inputValue})
-        if(res?.statusCode && res?.statusCode === 201) {
-         setIsModalOpen(false);
+        let res: any = await modifyrole(curIndex, {name: inputValue})
+        console.log("🚀 ~ file: modify.tsx:23 ~ handleOk ~ res:", res)
+        if(res?.statusCode && res?.statusCode === 200) {
+          props.setIsModalOpen(false);
          triggerBroFn()
             setInputValue('')
         }else{
           messageApi.open({
             type: 'error',
-            content: '新增失败,接口异常,请重试!'
+            content: '修改失败,接口异常,请重试!'
           });
         }
     };
   
     const handleCancel = () => {
-      setIsModalOpen(false);
+      props.setIsModalOpen(false);
       setInputValue('')
     };
 
@@ -55,8 +55,8 @@ const ModifyRole = (props: { triggerFn: any }) => {
     < >
     {contextHolder}
 
-      <Modal title="修改角色" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-      <Input placeholder="新的角色名" onChange ={ e => setInputValue(e.target.value)} value={ inputValue } />
+      <Modal title="修改角色" open= {props.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Input placeholder="新的角色名" onChange ={ e => setInputValue(e.target.value)} value={ inputValue } allowClear/>
       </Modal>
 
       

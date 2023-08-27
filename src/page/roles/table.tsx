@@ -9,7 +9,7 @@ interface DataType {
 }
 
 
-const RolesTable = (props:{getChildFn: any}) => {
+const RolesTable = (props:{getChildFn: any, setIsModalOpen: Function, setInputValue: Function, setCurIndex: Function}) => {
 
   let [tableData, setTableData] = useState([])
   const [messageApi, contextHolder] = message.useMessage();
@@ -46,7 +46,7 @@ const columns: ColumnsType<DataType> = [
     render: (_, record: { key: React.Key }) =>
     tableData.length >= 1 ? (
       <Space size="middle">
-        <a onClick={ openModify }>修改</a>
+        <a onClick={ () => openModify(record) }>修改</a>
           <Popconfirm title="确定删除?" onConfirm={() => handleDelete(record.key)}>
             <a style={ {color: 'red'}}>删除</a>
           </Popconfirm>
@@ -63,13 +63,14 @@ const columns: ColumnsType<DataType> = [
         content: '删除成功!'
       });
       getAllRoles()
-      
     }
 
   }
 
-  const openModify = () => {
-    
+  const openModify = (record: any) => {
+    props.setInputValue(record.name)
+    props.setIsModalOpen(true);
+    props.setCurIndex(record.id)
   }
 
 // 触发修改弹窗  的兄弟组件

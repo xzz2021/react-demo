@@ -102,8 +102,6 @@ config = {
 //-----------------------配置代理url-------------------manifest.json的match配置对应的接口域名,则不需要代理服务器-----
 //  let url2 = `http://xzz2022.top:666/${url}`
  fetch(url, config).then((response) => {
-    // console.log("🚀 ~ file: myfetch.ts:105 ~ fetch ~ config:", config)
-    // console.log("🚀 ~ file: myfetch.ts:105 ~ fetch ~ url:", url)
     // console.log('response: ', response);
     let { status, statusText, ok } = response;
 
