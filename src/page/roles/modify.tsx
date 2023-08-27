@@ -1,14 +1,13 @@
 import {  Button, Input, Modal, message } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { addrole, getrole } from '../../api/role';
 
 
-const Addrole = (props: { triggerFn: any}) => {
+const ModifyRole = (props: { triggerFn: any }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     let [inputValue, setInputValue] = useState('')
     const [messageApi, contextHolder] = message.useMessage();
-
 
    
     const showModal = () => {
@@ -39,19 +38,24 @@ const Addrole = (props: { triggerFn: any}) => {
       setInputValue('')
     };
 
+    //触发更新列表
   const { triggerFn } = props
     const triggerBroFn = () => {
         triggerFn.current.getAllRoles()
     }
 
+
+// const { exposeMyFn } = props
+// //暴露触发打开修改面板 的 方法  给父组件
+// useImperativeHandle(exposeMyFn,()=>({
+//   showModal
+// }))
+
   return (
     < >
     {contextHolder}
-      <Button onClick={showModal} type="primary" style={{ marginBottom: 16 }}>
-        添加新角色
-      </Button>
 
-      <Modal title="添加角色" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="修改角色" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
       <Input placeholder="新的角色名" onChange ={ e => setInputValue(e.target.value)} value={ inputValue } />
       </Modal>
 
@@ -61,4 +65,4 @@ const Addrole = (props: { triggerFn: any}) => {
   );
 }
 
-export default Addrole;
+export default ModifyRole;

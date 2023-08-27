@@ -1,12 +1,11 @@
 //  定义总入口，并在此处拦截权限
 
-import React, { Suspense } from 'react';
-import LayoutApp from './page/layout';
-import { Await, Route, RouterProvider, Routes, useLoaderData } from 'react-router-dom';
-import Login from './page/login';
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
-import Loading from './page/loading';
+import { ConfigProvider } from 'antd';
 
+import zhCN from 'antd/locale/zh_CN';
 
 
 const App: React.FC =  () => {
@@ -27,19 +26,11 @@ const App: React.FC =  () => {
 // </Suspense>
   
   return (
-//     <>
-//      <Routes>
-// <Route path="/login" element={<Login />} />
-// <Route path="/" element={<LayoutApp />} />
-// </Routes>
-//     </>
-<>
-
-{/* <RouterProvider router={router} /> */}
-</>
+      <ConfigProvider locale={zhCN}>
+           <RouterProvider router={router} />
+      </ConfigProvider>
 
   )
-
 }
 
 export default App;

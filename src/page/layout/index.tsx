@@ -6,20 +6,27 @@ import { Footer } from 'antd/es/layout/layout';
 import { Link, Outlet, useMatches, useNavigate } from 'react-router-dom';
 import  { getMenuPromise } from './getMenu'
 import './index.css'
-import { getKeyitem } from './getKeyItem';
+import { getKey, getKeyitem } from './getKeyItem';
 import { getAllPath } from './getAllPath';
 import Loading from '../loading';
 const { Header, Sider, Content } = Layout;
 
 
 const LayoutApp: React.FC = () => {
-  console.log("🚀============ ~ file: index.tsx:98 ~ LayoutApp:")
+  console.log("🚀============ ~ file: index.tsx:98 ~ LayoutApp:" )
 
   const [menuItems, setMenuItems] = useState([])
   const [allPath, setAllPath] = useState([])
+  
+
+  const getCurRoute = (menu: any[]) => {
+    let href = window.location.href
+    let path = '/' + href.split('/')[3]
+    return  getKey(menu, path)
+  }
   useEffect(() => {
     getMenuPromise().then( (res: any) => {
-      if(menuItems.length == 0){
+      // if(menuItems.length == 0){
         // let newMenu: any = loopMenuIcon(res)
         // console.log("🚀 ~ file: index.tsx:27 ~ getMenuPromise ~ res:", newMenu)
         //  设定菜单后,页面重新渲染, 导致 effect又重新请求,然后不断死循环渲染
@@ -27,13 +34,16 @@ const LayoutApp: React.FC = () => {
         setMenuItems(res)
         let pathArr: any = getAllPath(res)
         setAllPath(pathArr)
-      }
 
-    }
-    )
-  })
+      // 刷新页面  自动选中当前所在菜单项
+        setCurRoute(getCurRoute(res))
+        console.log("🚀 ~ file: index.tsx:47 ~ curRoute:", curRoute)
+      // }
+    })
+  }, [])
   
   const [collapsed, setCollapsed] = useState(false);
+  //  默认菜单选中项
   const [curRoute, setCurRoute] = useState(['1']);
 
   // const { token: { colorBgContainer }, } = theme.useToken();
@@ -42,6 +52,7 @@ const LayoutApp: React.FC = () => {
 
   const navigate = useNavigate()
 const getCurrentItem = (clickItem: any) => {
+  // console.log("🚀 ~ file: index.tsx:47 ~ getCurrentItem ~ clickItem:", clickItem)
   let curPath = clickItem.keyPath
   let currentItem = getKeyitem(menuItems,curPath)
   let curRoute = currentItem.path

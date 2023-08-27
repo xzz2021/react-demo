@@ -46,7 +46,7 @@ const columns: ColumnsType<DataType> = [
     render: (_, record: { key: React.Key }) =>
     tableData.length >= 1 ? (
       <Space size="middle">
-        <a>修改</a>
+        <a onClick={ openModify }>修改</a>
           <Popconfirm title="确定删除?" onConfirm={() => handleDelete(record.key)}>
             <a style={ {color: 'red'}}>删除</a>
           </Popconfirm>
@@ -67,6 +67,16 @@ const columns: ColumnsType<DataType> = [
     }
 
   }
+
+  const openModify = () => {
+    
+  }
+
+// 触发修改弹窗  的兄弟组件
+  // const { triggerModify } = props
+  // const openModify = () => {
+  //   triggerModify.current.showModal()
+  // }
 
 return (
 <>

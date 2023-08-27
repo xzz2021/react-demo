@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import RolesTable from './table';
 import Addrole from './addrole';
+import ModifyRole from './modify';
 
 
   const Roles:React.FC = () => {
@@ -10,7 +11,8 @@ import Addrole from './addrole';
   return (
     < >
        <Addrole  triggerFn = { event }/>
-      <RolesTable getChildFn = { event } />
+      <RolesTable getChildFn = { event }  />
+      <ModifyRole  triggerFn = { event }  />
     </>
   );
 }
