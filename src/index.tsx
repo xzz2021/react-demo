@@ -8,12 +8,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <>
-    {/* <React.StrictMode> */}
+    <React.StrictMode>
      {/* 注入路由  顶层包裹路由， 避免hook调用bug */}
      {/* <RouterProvider router={router} /> */}
      {/* <ConfigProvider locale={zhCN}> */}
         <App />
      {/* <ConfigProvider /> */}
-  {/* </React.StrictMode> */}
+  </React.StrictMode>
   </>
 );

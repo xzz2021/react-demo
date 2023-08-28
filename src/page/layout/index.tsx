@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
@@ -42,6 +42,13 @@ const LayoutApp: React.FC = () => {
     })
   }, [])
   
+    // let menuItems2: any = useMemo(
+    //    () => {
+    //     getMenuPromise().then( (res: any) => res); 
+    //   },
+    //   [menuItems]
+    // )
+    
   const [collapsed, setCollapsed] = useState(false);
   //  默认菜单选中项
   const [curRoute, setCurRoute] = useState(['1']);
@@ -52,7 +59,6 @@ const LayoutApp: React.FC = () => {
 
   const navigate = useNavigate()
 const getCurrentItem = (clickItem: any) => {
-  // console.log("🚀 ~ file: index.tsx:47 ~ getCurrentItem ~ clickItem:", clickItem)
   let curPath = clickItem.keyPath
   let currentItem = getKeyitem(menuItems,curPath)
   let curRoute = currentItem.path
