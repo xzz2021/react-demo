@@ -3,7 +3,7 @@ import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { addrole, getrole, modifyrole } from '../../api/role';
 
 
-const ModifyRole = (props: { triggerFn: any, setIsModalOpen: Function, isModalOpen: any, inputValue: string, setInputValue: Function, curIndex: any }) => {
+const ModifyRole = (props: { triggerFn?: any, setIsModalOpen: Function, isModalOpen: any, inputValue: string, setInputValue: Function, curIndex: any }) => {
 
     let { inputValue, setInputValue, curIndex } = props
     const [messageApi, contextHolder] = message.useMessage();

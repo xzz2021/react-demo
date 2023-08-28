@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { addrole, getrole } from '../../api/role';
 
 
-const Addrole = (props: { triggerFn: any}) => {
+const Addrole = (props: { getRolesTableDom: any}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     let [inputValue, setInputValue] = useState('')
@@ -39,9 +39,10 @@ const Addrole = (props: { triggerFn: any}) => {
       setInputValue('')
     };
 
-  const { triggerFn } = props
+  const { getRolesTableDom } = props
+    console.log("🚀 ~ file: addrole.tsx:43 ~ Addrole ~ getRolesTableDom:", getRolesTableDom)
     const triggerBroFn = () => {
-        triggerFn.current.getAllRoles()
+      getRolesTableDom.current.getAllRoles()
     }
 
   return (

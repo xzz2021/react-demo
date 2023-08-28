@@ -6,19 +6,25 @@ import ModifyRole from './modify';
 
   const Roles:React.FC = () => {
     
-  const event = useRef()
+  // const event = useRef()
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [inputValue, setInputValue] = useState('')
   const [curIndex, setCurIndex] = useState('')
 
+    const RolesTableDom: null | {current: any} = useRef(null)
+    setTimeout(() => {
+      
+      RolesTableDom.current && RolesTableDom.current.getAllRoles()
+    }, 3000);
+
   return (
     < >
-       <Addrole  triggerFn = { event }/>
-      <RolesTable getChildFn = { event }  setIsModalOpen = { setIsModalOpen } 
+       <Addrole  getRolesTableDom = { RolesTableDom }/>
+      <RolesTable ref = { RolesTableDom }  setIsModalOpen = { setIsModalOpen } 
       setInputValue = { setInputValue }  setCurIndex= { setCurIndex }
       />
-      <ModifyRole  triggerFn = { event }  setIsModalOpen = { setIsModalOpen } 
+      <ModifyRole   setIsModalOpen = { setIsModalOpen } 
       isModalOpen = { isModalOpen }
       inputValue = { inputValue }
       setInputValue = { setInputValue }
