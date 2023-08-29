@@ -1,17 +1,29 @@
-import {  Button, Input, Modal, message } from 'antd';
-import React, { useEffect, useImperativeHandle, useState } from 'react';
-import { addrole, getrole, modifyrole } from '../../api/role';
+import {   Input, Modal, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+import {  modifyrole } from '../../api/role';
 
 
-const ModifyRole = (props: { triggerFn?: any, setIsModalOpen: Function, isModalOpen: any, inputValue: string, setInputValue: Function, curIndex: any }) => {
+const ModifyRole = () => {
 
-    let { inputValue, setInputValue, curIndex } = props
     const [messageApi, contextHolder] = message.useMessage();
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [inputValue, setInputValue] = useState('')
+  const [curIndex, setCurIndex] = useState('')
    
+  useEffect(() => {
+    // 监听打开面板
+    window.emitter.on('openPanel', (e:any) => {
+      const { name, id } = e
+      setInputValue(name)
+      setCurIndex(id)
+      showModal()
+    })
+  }, [])
     const showModal = () => {
         // 打开面板
-      props.setIsModalOpen(true);
+      setIsModalOpen(true);
     };
   
     const handleOk = async () => {
@@ -20,11 +32,12 @@ const ModifyRole = (props: { triggerFn?: any, setIsModalOpen: Function, isModalO
             content: '角色名不能为空!',
           });
         let res: any = await modifyrole(curIndex, {name: inputValue})
-        console.log("🚀 ~ file: modify.tsx:23 ~ handleOk ~ res:", res)
-        if(res?.statusCode && res?.statusCode === 200) {
-          props.setIsModalOpen(false);
-         triggerBroFn()
-            setInputValue('')
+        if(res?.statusCode && res?.statusCode == 200) {
+          setIsModalOpen(false);
+        //  triggerBroFn()
+        // 触发更新表格事件
+        window.emitter.emit('updateTable')
+            // setInputValue('')
         }else{
           messageApi.open({
             type: 'error',
@@ -34,15 +47,12 @@ const ModifyRole = (props: { triggerFn?: any, setIsModalOpen: Function, isModalO
     };
   
     const handleCancel = () => {
-      props.setIsModalOpen(false);
+      setIsModalOpen(false);
       setInputValue('')
     };
 
     //触发更新列表
-  const { triggerFn } = props
-    const triggerBroFn = () => {
-        triggerFn.current.getAllRoles()
-    }
+
 
 
 // const { exposeMyFn } = props
@@ -55,7 +65,7 @@ const ModifyRole = (props: { triggerFn?: any, setIsModalOpen: Function, isModalO
     < >
     {contextHolder}
 
-      <Modal title="修改角色" open= {props.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="修改角色" open= {isModalOpen} onOk={handleOk} onCancel={handleCancel}>
       <Input placeholder="新的角色名" onChange ={ e => setInputValue(e.target.value)} value={ inputValue } allowClear/>
       </Modal>
 

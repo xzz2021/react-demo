@@ -40,7 +40,6 @@ const Addrole = (props: { getRolesTableDom: any}) => {
     };
 
   const { getRolesTableDom } = props
-    console.log("🚀 ~ file: addrole.tsx:43 ~ Addrole ~ getRolesTableDom:", getRolesTableDom)
     const triggerBroFn = () => {
       getRolesTableDom.current.getAllRoles()
     }

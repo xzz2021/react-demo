@@ -10,9 +10,9 @@ interface DataType {
 
 interface TempProps {
   getChildFn?: any, 
-  setIsModalOpen: Function, 
-  setInputValue: Function, 
-  setCurIndex: Function
+  setIsModalOpen?: Function, 
+  setInputValue?: Function, 
+  setCurIndex?: Function
 }
 
 const RolesTable = forwardRef((props:TempProps, ref) => {
@@ -21,18 +21,21 @@ const RolesTable = forwardRef((props:TempProps, ref) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const getAllRoles = async () => {
-    
     console.log("🚀 ~ file: table.tsx:29 ~ getAllRoles ~ res:")
     let res: any = await getrole()
     if(res?.length && res.length > 0) {
       res.map((item: { key: any; id: any; })  => item.key = item.id)
       setTableData(res)
     }
-
 }
 useEffect(() => {
   if(tableData.length > 0) return 
     getAllRoles()
+    // 监听更新表格事件
+     window.emitter.on('updateTable', () => {
+      getAllRoles()
+    } )
+
 })
 
 // const { getChildFn } = props
@@ -76,9 +79,8 @@ const columns: ColumnsType<DataType> = [
   }
 
   const openModify = (record: any) => {
-    props.setInputValue(record.name)
-    props.setIsModalOpen(true);
-    props.setCurIndex(record.id)
+    // 触发打开面板事件
+    window.emitter.emit('openPanel',  record )
   }
 
 // 触发修改弹窗  的兄弟组件
