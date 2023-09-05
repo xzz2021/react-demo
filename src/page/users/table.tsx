@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import { getuser } from '../../api/user';
 
 interface DataType {
   key: string;
-  name: string;
+  username: string;
   age: number;
   gender: string;
   address: string;
+  role: string
 }
 
 const columns: ColumnsType<DataType> = [
   {
     title: '用户名',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'username',
+    key: 'username',
     // render: (text) => <a>{text}</a>,
   },
   {
@@ -33,6 +35,11 @@ const columns: ColumnsType<DataType> = [
     key: 'address',
   },
   {
+    title: '角色',
+    dataIndex: 'role',
+    key: 'role',
+  },
+  {
     title: 'Action',
     key: 'action',
     render: (_, record) => (
@@ -44,30 +51,44 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    gender: 'male',
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    gender: 'female',
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    gender: 'male',
-    address: 'Sydney No. 1 Lake Park',
-  },
-];
+// const data: DataType[] = [
+//   {
+//     key: '1',
+//     name: 'John Brown',
+//     age: 32,
+//     gender: 'male',
+//     address: 'New York No. 1 Lake Park',
+//     role: "管理员"
+//   }
+// ];
 
-const UsersTable: React.FC = () => <Table columns={columns} dataSource={data} />;
+
+const UsersTable: React.FC = () =>{
+
+  const [ data, setData ] = useState([])
+
+  const updateData = async () => {
+    let res:any = await getuser()
+      // return res
+      res.map((item:any, index: number) => {
+        item.key = index
+        
+        if(item.profile) {
+          item = Object.assign(item, item.profile)
+          delete item.profile
+         }
+        if(item.role) { 
+          const role = item.role.map((item2: any) => item2.name)
+          item.role = role.join(',')
+        }
+      })
+      setData(res)
+  }
+  useEffect(() => {
+     updateData()
+  }, [])
+
+return <Table columns={columns} dataSource={data} />;
+} 
 
 export default UsersTable;

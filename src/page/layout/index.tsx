@@ -37,7 +37,6 @@ const LayoutApp: React.FC = () => {
 
       // 刷新页面  自动选中当前所在菜单项
         setCurRoute(getCurRoute(res))
-        console.log("🚀 ~ file: index.tsx:47 ~ curRoute:", curRoute)
       // }
     })
   }, [])
