@@ -21,12 +21,15 @@ const RolesTable = forwardRef((props:TempProps, ref) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const getAllRoles = async () => {
-    console.log("🚀 ~ file: table.tsx:29 ~ getAllRoles ~ res:")
+    // console.log("🚀 ~ file: table.tsx:29 ~ getAllRoles ~ res:")
     let res: any = await getrole()
-    if(res?.length && res.length > 0) {
-      res.map((item: { key: any; id: any; })  => item.key = item.id)
-      setTableData(res)
+    const { data, statusCode } = res
+    if(statusCode === 200) {
+    if(data.length) {
+      data.map((item: { key: any; id: any; })  => item.key = item.id)
+      setTableData(data)
     }
+  }
 }
 useEffect(() => {
   if(tableData.length > 0) return 
@@ -68,14 +71,15 @@ const columns: ColumnsType<DataType> = [
 ];
   const handleDelete = async (key: any) => {
     let res: any =  await deleterole(key)
-    if(res.statusCode == 200) {
+    const { data, statusCode } = res
+
+    if(statusCode == 200) {
       messageApi.open({
         type: 'success',
-        content: '删除成功!'
+        content: data.msg
       });
       getAllRoles()
     }
-
   }
 
   const openModify = (record: any) => {

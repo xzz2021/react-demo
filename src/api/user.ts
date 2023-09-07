@@ -14,8 +14,8 @@ export const getuser = async () => {
 }
 
 
-export const deleteuser = async (id: any) => {
-    let res = await xzzfetch(`users/${id}`, {method: 'delete'})
+export const deleteuser = async (username: string) => {
+    let res = await xzzfetch(`users/delete`, {method: 'delete',body:{username}})
     return res
 }
 
