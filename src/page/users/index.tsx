@@ -1,10 +1,11 @@
 import React from 'react';
 import UsersTable from './table';
+import Adduser from './adduser';
 
 function Users() {
   return (
     < >
-      <div>所有用户</div>
+      <Adduser />
       <UsersTable />
     </>
   );

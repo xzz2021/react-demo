@@ -96,7 +96,7 @@ const UsersTable: React.FC = () =>{
 
   const handleDelete = async (username: string) => {
     let res: any =  await deleteuser(username)
-    console.log("🚀 ~ file: table.tsx:99 ~ handleDelete ~ res:", res)
+    // console.log("🚀 ~ file: table.tsx:99 ~ handleDelete ~ res:", res)
     if(res.statusCode == 200) {
       messageApi.open({
         type: 'success',
