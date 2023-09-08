@@ -59,7 +59,7 @@ const UsersTable: React.FC = () =>{
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a>修改</a>
+          <a onClick={() => modifyBtn(record) }>修改</a>
           <Popconfirm title="确定删除?" onConfirm={() => handleDelete(record.username)}>
               <a style={ {color: 'red'}}>删除</a>
             </Popconfirm>
@@ -91,12 +91,15 @@ const UsersTable: React.FC = () =>{
   }
   useEffect(() => {
      updateData()
+      // 监听更新用户事件
+    window.emitter.on('updateData', () => {
+      updateData()
+    })
   }, [])
 
 
   const handleDelete = async (username: string) => {
     let res: any =  await deleteuser(username)
-    // console.log("🚀 ~ file: table.tsx:99 ~ handleDelete ~ res:", res)
     if(res.statusCode == 200) {
       messageApi.open({
         type: 'success',
@@ -104,6 +107,10 @@ const UsersTable: React.FC = () =>{
       });
       updateData()
     }
+  }
+
+  const modifyBtn = (record:any) => {
+    window.emitter.emit('openModifyUserModal', record)
   }
 
 return (

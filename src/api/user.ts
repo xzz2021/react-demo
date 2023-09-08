@@ -20,7 +20,7 @@ export const deleteuser = async (username: string) => {
 }
 
 
-export const modifyuser = async (id: any, params: {}) => {
-    let res = await xzzfetch(`users/${id}`, {method: 'patch', params})
+export const modifyuser = async (body:any) => {
+    let res = await xzzfetch("users/modifyinfo", {method: 'post', body})
     return res
 }

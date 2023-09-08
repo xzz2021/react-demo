@@ -102,8 +102,10 @@ config = {
 //-----------------------配置代理url-------------------manifest.json的match配置对应的接口域名,则不需要代理服务器-----
 //  let url2 = `http://xzz2022.top:666/${url}`
  fetch(url, config).then((response) => {
+    // console.log("🚀 ~ file: myfetch.ts:105 ~ fetch ~ response:", response)
     // console.log('response: ', response);
     let { status, statusText, ok } = response;
+    // console.log("🚀 ~ file: myfetch.ts:107 ~ fetch ~ status:", status)
 
     if (ok) {
         let result;
@@ -129,6 +131,7 @@ config = {
     //     // return `ERROR CODE 异常, ${status},-----异常原因:${statusText}`
     // }
 }).then(res => {
+        // console.log("🚀 ~ file: myfetch.ts:132 ~ fetch ~ res:", res)
         resolve(res)
 
 }).catch((reason) => {

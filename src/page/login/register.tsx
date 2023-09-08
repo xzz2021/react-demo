@@ -2,7 +2,6 @@ import React from "react";
 
 import { Button, Form, Input, message } from "antd";
 
-import { Link } from "react-router-dom";
 import { xzzRegister } from "../../api/userinfo";
 
 type FieldType = {
