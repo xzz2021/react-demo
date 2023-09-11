@@ -1,11 +1,18 @@
 import React from 'react';
+import { useRouteError } from 'react-router-dom';
 
-function NotFound() {
+function ErrorPage() {
+
+  const error: any = useRouteError();
+  console.error(error);
   return (
     < >
-      <div>NotFound</div>
+      <div>错误页面</div>
+      <p>
+        <i>{error.statusText || error.message}</i>
+      </p>
     </>
   );
 }
 
-export default NotFound;
+export default ErrorPage;

@@ -3,7 +3,10 @@ import React, { lazy } from 'react';
 import { createBrowserRouter, Link, Navigate } from "react-router-dom";
 // import Home from '../page/home';
 import LayoutApp from '../page/layout';
+import ErrorPage from '../page/error';
 
+import { roleloader } from '../page/roles/table'
+import Loading from '../page/loading';
 
 // import Users from '../page/users';
 // import Profile from '../page/profile';
@@ -22,9 +25,15 @@ import LayoutApp from '../page/layout';
     [{
       path: '/',
       element: <LayoutApp/>,
+      errorElement: <ErrorPage />,
       children: [
         {
-          path: '/home',
+          index: true,
+          element: <Loading />
+          // Component: lazy(()=> import('../page/home'))
+        },
+        {
+          path: 'home',
           // element: <Home />,
           Component: lazy(()=> import('../page/home'))
           
@@ -38,7 +47,8 @@ import LayoutApp from '../page/layout';
         {
           path: '/roles',
           // element: <Roles />,
-          Component: lazy(()=> import('../page/roles'))
+          Component: lazy(()=> import('../page/roles')),
+          loader: roleloader,
 
         },
         {
@@ -73,14 +83,14 @@ import LayoutApp from '../page/layout';
         },
       ]
     },
-    {
-      path: '/',
-      element: <Navigate to="/home"/>
-    },
     // {
-    //   path: '*',
-    //   element: <NotFound />,
+    //   path: '/',
+    //   element: <Navigate to="/home"/>
     // },
+    //  {
+    //    path: '*',
+    //    Component: lazy(()=> import('../page/error'))
+    //  },
     {
       path: 'login',
       // element: <Login />,
@@ -90,15 +100,6 @@ import LayoutApp from '../page/layout';
   ]
   )
 
-  export  const MyrouterLink = () => {
 
-    return (
-            <>
-            <Link to='/users' />
-            <Link to='/home' />
-            <Link to='/profile' />
-            </>
-    )
-  }
 
 

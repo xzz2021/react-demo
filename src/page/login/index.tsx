@@ -9,7 +9,7 @@ import RegisterForm from "./register";
 const Login = () => {
     const [isLoginPage, setIsLoginPage] = useState(true)
     const changePage = ( ) => {
-        console.log("🚀 ~ file: index.tsx:11 ~ Login ~ isLoginPage:", isLoginPage)
+        // console.log("🚀 ~ file: index.tsx:11 ~ Login ~ isLoginPage:", isLoginPage)
         setIsLoginPage(!isLoginPage)
     }
         if(isLoginPage){

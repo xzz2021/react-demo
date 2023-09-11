@@ -24,10 +24,11 @@ const onFinish = async (forminfo: FieldType) => {
 
   let res: any = await xzzRegister(forminfo);
 
-  console.log("🚀 ~ file: register.tsx:15 ~ onFinish ~ res:", res);
+  // console.log("🚀 ~ file: register.tsx:15 ~ onFinish ~ res:", res);
 
   if (res?.statusCode.toString().startsWith("2")) {
     console.log("响应成功!", res);
+    props.changeStatus()
   } else {
     // messageApi.error(res.error)
     console.log("响应失败!", res);

@@ -40,13 +40,6 @@ const LayoutApp: React.FC = () => {
       // }
     })
   }, [])
-  
-    // let menuItems2: any = useMemo(
-    //    () => {
-    //     getMenuPromise().then( (res: any) => res); 
-    //   },
-    //   [menuItems]
-    // )
     
   const [collapsed, setCollapsed] = useState(false);
   //  默认菜单选中项
@@ -71,9 +64,6 @@ const getCurrentItem = (clickItem: any) => {
 if (matches.length && !allPath.some(path => matches[matches.length - 1].pathname == path)) {
     navigate('/home')
 }
-// if(menuItems.length){
-//   return <Loading />
-// }
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed} theme='light'>

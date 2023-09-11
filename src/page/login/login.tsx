@@ -42,9 +42,9 @@ const LoginForm: React.FC<RegisterFormProps> = (props: any) => {
 
     }
     let res: any = await xzzlogin(account)
-    console.log("🚀 ~ file: login.tsx:21 ~ onFinish ~ res:", res)
+    // console.log("🚀 ~ file: login.tsx:21 ~ onFinish ~ res:", res)
     if (res.statusCode.toString().startsWith('2')) {
-      let authToken = res.access_token
+      let authToken = res.data.access_token
       localStorage.setItem('authToken', authToken)
       console.log('响应成功!', res);
     } else {

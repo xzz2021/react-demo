@@ -2,6 +2,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import { Popconfirm, Space, Table, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { deleterole, getrole } from '../../api/role';
+import { useLoaderData } from 'react-router-dom';
 
 interface DataType {
   key: string;
@@ -17,29 +18,30 @@ interface TempProps {
 
 const RolesTable = forwardRef((props:TempProps, ref) => {
 
-  let [tableData, setTableData] = useState([])
+  const [tableData, setTableData] = useState([])
   const [messageApi, contextHolder] = message.useMessage();
 
+  const  rr: any = useLoaderData()
+
   const getAllRoles = async () => {
-    // console.log("🚀 ~ file: table.tsx:29 ~ getAllRoles ~ res:")
     let res: any = await getrole()
     const { data, statusCode } = res
     if(statusCode === 200) {
     if(data.length) {
       data.map((item: { key: any; id: any; })  => item.key = item.id)
       setTableData(data)
-    }
+      }
   }
 }
+console.log("🚀 ~ file: table.tsx:39 ~ useEffect ~ 执行次数:")
 useEffect(() => {
-  if(tableData.length > 0) return 
-    getAllRoles()
+  setTableData(rr.rolesData)
     // 监听更新表格事件
      window.emitter.on('updateTable', () => {
       getAllRoles()
     } )
 
-})
+}, [])
 
 // const { getChildFn } = props
 // console.log("🚀 ~ file: table.tsx:32 ~ RolesTable ~ getChildFn:", getChildFn)
@@ -87,12 +89,6 @@ const columns: ColumnsType<DataType> = [
     window.emitter.emit('openPanel',  record )
   }
 
-// 触发修改弹窗  的兄弟组件
-  // const { triggerModify } = props
-  // const openModify = () => {
-  //   triggerModify.current.showModal()
-  // }
-
 return (
 <>
 {contextHolder}
@@ -102,5 +98,25 @@ return (
 
 )
 })
+
+
+const getAllRoles = async () => {
+  let res: any = await getrole()
+  const { data, statusCode } = res
+  if(statusCode === 200) {
+  if(data.length) {
+    data.map((item: { key: any; id: any; })  => item.key = item.id)
+    return data
+  }
+}else{
+  return []
+}
+}
+
+//  结合router loader 加载数据
+export async function roleloader(): Promise<any> {
+  const rolesData = await getAllRoles();
+  return { rolesData };
+}
 
 export default RolesTable;
