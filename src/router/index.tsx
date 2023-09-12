@@ -1,10 +1,9 @@
 
 import React, { lazy } from 'react';
-import { createBrowserRouter, Link, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 // import Home from '../page/home';
 import LayoutApp from '../page/layout';
 import ErrorPage from '../page/error';
-
 import { roleloader } from '../page/roles/table'
 import Loading from '../page/loading';
 
@@ -15,11 +14,6 @@ import Loading from '../page/loading';
 // import Roles from '../page/roles';
 // import Permissions from '../page/permissions';
 // import Menus from '../page/menus';
-
-
-// let allEntities2 = [path.resolve(__dirname,'src/page/*/index.tsx',)]
-// console.log("🚀 ~ file: index.tsx:19 ~ allEntities2:", allEntities2)
-
 
   export  const router = createBrowserRouter (
     [{

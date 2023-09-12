@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
-
 import { Button, Checkbox, Form, Input, message } from 'antd';
-import { Link } from "react-router-dom";
 import { xzzlogin } from "../../api/userinfo";
-import RegisterForm from "./register";
-
 
 type FieldType = {
   username: string;
@@ -15,12 +11,9 @@ type FieldType = {
 interface RegisterFormProps {
   changeStatus?: Function,
   [propName: string]: any;
-
 }
-const LoginForm: React.FC<RegisterFormProps> = (props: any) => {
-// console.log("🚀 ~ file: login.tsx:21 ~ props:", props)
-
-  const [xzzform] = Form.useForm();  // 获取表单实例
+  const LoginForm: React.FC<RegisterFormProps> = (props: any) => {
+    const [xzzform] = Form.useForm();  // 获取表单实例
 
   function setCurname() {
     // 加载 记住的 用户名
@@ -39,7 +32,6 @@ const LoginForm: React.FC<RegisterFormProps> = (props: any) => {
       localStorage.setItem('username', account.username)
     } else {
       localStorage.removeItem('username')
-
     }
     let res: any = await xzzlogin(account)
     // console.log("🚀 ~ file: login.tsx:21 ~ onFinish ~ res:", res)
@@ -50,9 +42,7 @@ const LoginForm: React.FC<RegisterFormProps> = (props: any) => {
     } else {
       messageApi.error(res.error)
       console.log('响应失败!', res);
-
     }
-
   }
 
   const onFinishFailed = (errorInfo: any) => {
