@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { xzzlogin } from "../../api/userinfo";
+import { redirect } from "react-router-dom";
 
 type FieldType = {
   username: string;
@@ -39,6 +40,8 @@ interface RegisterFormProps {
       let authToken = res.data.access_token
       localStorage.setItem('authToken', authToken)
       console.log('响应成功!', res);
+      redirect('/')
+      console.log("🚀 ~ file: login.tsx:4跳转跳转-----3 ~ onFinish ~ 响应成功:")
     } else {
       messageApi.error(res.error)
       console.log('响应失败!', res);

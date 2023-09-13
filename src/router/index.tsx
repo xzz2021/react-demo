@@ -2,10 +2,11 @@
 import React, { lazy } from 'react';
 import { createBrowserRouter } from "react-router-dom";
 // import Home from '../page/home';
-import LayoutApp from '../page/layout';
+import LayoutApp, { layoutloader } from '../page/layout';
 import ErrorPage from '../page/error';
 import { roleloader } from '../page/roles/table'
 import Loading from '../page/loading';
+import { loginloader } from '../page/login';
 
 // import Users from '../page/users';
 // import Profile from '../page/profile';
@@ -19,13 +20,13 @@ import Loading from '../page/loading';
     [{
       path: '/',
       element: <LayoutApp/>,
+      loader: layoutloader,
       errorElement: <ErrorPage />,
       children: [
-        {
-          index: true,
-          element: <Loading />
-          // Component: lazy(()=> import('../page/home'))
-        },
+        // {
+        //   index: true,
+        //   element: <Loading />
+        // },
         {
           path: 'home',
           // element: <Home />,
@@ -36,7 +37,6 @@ import Loading from '../page/loading';
           path: '/users',
           // element: <Users />,
           Component: lazy(()=> import('../page/users'))
-
         },
         {
           path: '/roles',
@@ -61,13 +61,6 @@ import Loading from '../page/loading';
           path: '/profile',
           // element: <Profile />,
           Component: lazy(()=> import('../page/profile'))
-
-        },
-        {
-          path: '*',
-          // element: <NotFound />,
-          Component: lazy(()=> import('../page/error'))
-
         },
         {
           path: '/test',
@@ -75,22 +68,25 @@ import Loading from '../page/loading';
           Component: lazy(()=> import('../page/error'))
 
         },
+        {
+          path: '*',
+          // element: <NotFound />,
+          Component: lazy(()=> import('../page/error'))
+        },
+        
       ]
     },
-    // {
-    //   path: '/',
-    //   element: <Navigate to="/home"/>
-    // },
-    //  {
-    //    path: '*',
-    //    Component: lazy(()=> import('../page/error'))
-    //  },
     {
-      path: 'login',
-      // element: <Login />,
+      path: '/login',
+      loader: loginloader,
       Component: lazy(()=> import('../page/login'))
-
-    }
+    },
+    {
+      path: '*',
+      element: <Loading />,
+      errorElement: <ErrorPage />,
+      // Component: lazy(()=> import('../page/loading'))
+    },
   ]
   )
 

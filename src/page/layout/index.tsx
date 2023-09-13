@@ -3,12 +3,13 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
 
-import { Link, Outlet, useMatches, useNavigate } from 'react-router-dom';
+import { Link, Outlet, redirect, useLocation, useMatches, useNavigate } from 'react-router-dom';
 import  { getMenuPromise } from './getMenu'
 import './index.css'
 import { getKey, getKeyitem } from './getKeyItem';
 import { getAllPath } from './getAllPath';
 import Loading from '../loading';
+import { xzzGetinfo } from '../../api/auth';
 const { Header, Sider, Content } = Layout;
 
 
@@ -47,11 +48,14 @@ const LayoutApp: React.FC = () => {
 
   // const { token: { colorBgContainer }, } = theme.useToken();
   let colorBgContainer = '#ffffff'
-
+  // const location = useLocation();
+  // console.log("🚀 ~ file: index.tsx:57 ~ getCurrentItem ~ location:", location)
 
   const navigate = useNavigate()
 const getCurrentItem = (clickItem: any) => {
+  // console.log("🚀 ~ file: index.tsx:56 ~ getCurrentItem ~ clickItem:", clickItem)
   let curPath = clickItem.keyPath
+  
   let currentItem = getKeyitem(menuItems,curPath)
   let curRoute = currentItem.path
   if(curRoute){
@@ -59,11 +63,11 @@ const getCurrentItem = (clickItem: any) => {
     navigate(curRoute)
   }
 }
- // 获取匹配到的路由
- const matches = useMatches()
-if (matches.length && !allPath.some(path => matches[matches.length - 1].pathname == path)) {
-    navigate('/home')
-}
+//  // 获取匹配到的路由
+//  const matches = useMatches()
+// if (matches.length && !allPath.some(path => matches[matches.length - 1].pathname == path)) {
+//     navigate('/home')
+// }
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed} theme='light'>
@@ -119,6 +123,18 @@ if (matches.length && !allPath.some(path => matches[matches.length - 1].pathname
       </Layout>
     </Layout>
   );
+}
+
+
+//  结合router loader 加载数据
+export async function layoutloader(): Promise<any> {
+  console.log("🚀 ~ file: index.tsx:128 ~ la测试youtloader ~ layoutloader:")
+  const valToken = await xzzGetinfo();
+  localStorage.setItem('isLogin', valToken.toString())
+  if(!valToken){
+    throw redirect('/login')
+  }
+  return true
 }
 
 export default LayoutApp;

@@ -30,7 +30,7 @@ let baseURL: string = 'http://localhost:3000/'
 
 //配置认证的标准token
 let token = localStorage.getItem('authToken');
-console.log("🚀 ~ file: myfetch.ts:33 ~ token:", token)
+// console.log("🚀 ~ file: myfetch.ts:33 ~ token:", token)
 if (token) inital.headers = Object.assign(inital.headers, {'Authorization': "bearer " + token})
 
 // 判断 是否是对象
