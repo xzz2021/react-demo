@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { xzzlogin } from "../../api/userinfo";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type FieldType = {
   username: string;
@@ -27,6 +27,8 @@ interface RegisterFormProps {
   }, [])
   const [messageApi, contextHolder] = message.useMessage();
 
+  const navigate = useNavigate();
+
   const onFinish = async (forminfo: FieldType) => {
     const { remember, ...account } = forminfo
     if (remember) {
@@ -40,8 +42,7 @@ interface RegisterFormProps {
       let authToken = res.data.access_token
       localStorage.setItem('authToken', authToken)
       console.log('响应成功!', res);
-      redirect('/')
-      console.log("🚀 ~ file: login.tsx:4跳转跳转-----3 ~ onFinish ~ 响应成功:")
+      navigate('/')
     } else {
       messageApi.error(res.error)
       console.log('响应失败!', res);

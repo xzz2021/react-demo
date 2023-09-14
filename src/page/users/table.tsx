@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Popconfirm, Space, Table, Tag, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { deleteuser, getuser } from '../../api/user';
+import { useLoaderData } from 'react-router-dom';
 
 interface DataType {
   key: string;
@@ -27,6 +28,7 @@ interface DataType {
 
 
 const UsersTable: React.FC = () =>{
+
   const columns: ColumnsType<DataType> = [
     {
       title: '用户名',
@@ -70,6 +72,8 @@ const UsersTable: React.FC = () =>{
 
   const [ data, setData ] = useState([])
   const [messageApi, contextHolder] = message.useMessage();
+  const  { usersData } = useLoaderData() as any
+
   const updateData = async () => {
     let res:any = await getuser()
       // return res
@@ -90,7 +94,7 @@ const UsersTable: React.FC = () =>{
     }
   }
   useEffect(() => {
-     updateData()
+    setData(usersData)
       // 监听更新用户事件
     window.emitter.on('updateData', () => {
       updateData()
@@ -119,7 +123,9 @@ return (
 <Table columns={columns} dataSource={data} />;
   </>
 )
-
 } 
+
+
+
 
 export default UsersTable;

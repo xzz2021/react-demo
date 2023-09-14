@@ -3,7 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
 
-import { Link, Outlet, redirect, useLocation, useMatches, useNavigate } from 'react-router-dom';
+import { Link, Outlet, redirect, useLoaderData, useLocation, useMatches, useNavigate } from 'react-router-dom';
 import  { getMenuPromise } from './getMenu'
 import './index.css'
 import { getKey, getKeyitem } from './getKeyItem';
@@ -25,6 +25,13 @@ const LayoutApp: React.FC = () => {
     let path = '/' + href.split('/')[3]
     return  getKey(menu, path)
   }
+
+
+  let location = useLocation();
+  // console.log("🚀 ~ file: index.tsx:31 ~ location:", location)
+  
+  const  { apimenu } = useLoaderData() as any
+  
   useEffect(() => {
     getMenuPromise().then( (res: any) => {
       // if(menuItems.length == 0){
@@ -32,7 +39,12 @@ const LayoutApp: React.FC = () => {
         // console.log("🚀 ~ file: index.tsx:27 ~ getMenuPromise ~ res:", newMenu)
         //  设定菜单后,页面重新渲染, 导致 effect又重新请求,然后不断死循环渲染
         //  所以需要加一个flag进行拦截处理, 避免 数据  重复 变更
-        setMenuItems(res)
+      // 因为jsx只能在此处渲染赋值icon
+        let newres  = res.map((item:any)=>{
+          item.icon = <item.iconname />
+          return item
+        }) 
+        setMenuItems(newres)
         let pathArr: any = getAllPath(res)
         setAllPath(pathArr)
 
@@ -48,16 +60,14 @@ const LayoutApp: React.FC = () => {
 
   // const { token: { colorBgContainer }, } = theme.useToken();
   let colorBgContainer = '#ffffff'
-  // const location = useLocation();
-  // console.log("🚀 ~ file: index.tsx:57 ~ getCurrentItem ~ location:", location)
 
   const navigate = useNavigate()
 const getCurrentItem = (clickItem: any) => {
-  // console.log("🚀 ~ file: index.tsx:56 ~ getCurrentItem ~ clickItem:", clickItem)
   let curPath = clickItem.keyPath
   
   let currentItem = getKeyitem(menuItems,curPath)
   let curRoute = currentItem.path
+  if(curRoute == location.pathname) return
   if(curRoute){
     setCurRoute(clickItem.keyPath)
     navigate(curRoute)
@@ -79,9 +89,10 @@ const getCurrentItem = (clickItem: any) => {
           theme="light"
           mode="inline"
           // defaultSelectedKeys={ curRoute }
+          // defaultOpenKeys= {}
           selectedKeys={ curRoute }
           items={menuItems}
-          onClick={getCurrentItem }
+          onClick={ getCurrentItem }
         />
       </Sider>
       <Layout>
@@ -105,19 +116,11 @@ const getCurrentItem = (clickItem: any) => {
             background: colorBgContainer,
           }}
         >
-                {/* <MyrouterLink /> */}
-                {/* { allPath.map(path =>
-                 <Link to={ path } key = {path}/>
-                  )}
-                  
-                <Link to='*' /> */}
-
                 {/* 路由占位符, 从而navigate能够使用 */}
                 {/* 因为使用了懒加载,所以必须用suspense进行包裹 */}
                 <Suspense fallback={<Loading />}>
                 <Outlet />
                 </Suspense>
-
         </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
       </Layout>
@@ -132,7 +135,7 @@ export async function layoutloader(): Promise<any> {
   const valToken = await xzzGetinfo();
   localStorage.setItem('isLogin', valToken.toString())
   if(!valToken){
-    throw redirect('/login')
+    return redirect('/login')
   }
   return true
 }

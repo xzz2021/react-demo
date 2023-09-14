@@ -7,6 +7,7 @@ import ErrorPage from '../page/error';
 import { roleloader } from '../page/roles/table'
 import Loading from '../page/loading';
 import { loginloader } from '../page/login';
+import { usersloader } from '../page/users';
 
 // import Users from '../page/users';
 // import Profile from '../page/profile';
@@ -36,7 +37,8 @@ import { loginloader } from '../page/login';
         {
           path: '/users',
           // element: <Users />,
-          Component: lazy(()=> import('../page/users'))
+          Component: lazy(()=> import('../page/users')),
+          loader: usersloader
         },
         {
           path: '/roles',
