@@ -40,7 +40,9 @@ interface RegisterFormProps {
     // console.log("🚀 ~ file: login.tsx:21 ~ onFinish ~ res:", res)
     if (res.statusCode.toString().startsWith('2')) {
       let authToken = res.data.access_token
-      localStorage.setItem('authToken', authToken)
+       localStorage.setItem('authToken', authToken)
+      // let ttt = localStorage.getItem('authToken')
+      // console.log("🚀 ~ file: login.tsx:45 ~ onFinish ~ ttt:", ttt)
       console.log('响应成功!', res);
       navigate('/')
     } else {

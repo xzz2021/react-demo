@@ -3,34 +3,31 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
 
-import { Link, Outlet, redirect, useLoaderData, useLocation, useMatches, useNavigate } from 'react-router-dom';
+import { Link, Outlet, redirect, useLocation, useNavigate } from 'react-router-dom';
 import  { getMenuPromise } from './getMenu'
 import './index.css'
 import { getKey, getKeyitem } from './getKeyItem';
-import { getAllPath } from './getAllPath';
 import Loading from '../loading';
 import { xzzGetinfo } from '../../api/auth';
 const { Header, Sider, Content } = Layout;
 
 
 const LayoutApp: React.FC = () => {
-  console.log("🚀============ ~ file: index.tsx:98 ~ LayoutApp:" )
-
-  const [menuItems, setMenuItems] = useState([])
-  const [allPath, setAllPath] = useState([])
   
-
+  const [menuItems, setMenuItems] = useState([])
+  
+  
   const getCurRoute = (menu: any[]) => {
     let href = window.location.href
     let path = '/' + href.split('/')[3]
     return  getKey(menu, path)
   }
-
-
+  
+  
   let location = useLocation();
   // console.log("🚀 ~ file: index.tsx:31 ~ location:", location)
   
-  const  { apimenu } = useLoaderData() as any
+  // const  { apimenu } = useLoaderData() as any
   
   useEffect(() => {
     getMenuPromise().then( (res: any) => {
@@ -45,9 +42,6 @@ const LayoutApp: React.FC = () => {
           return item
         }) 
         setMenuItems(newres)
-        let pathArr: any = getAllPath(res)
-        setAllPath(pathArr)
-
       // 刷新页面  自动选中当前所在菜单项
         setCurRoute(getCurRoute(res))
       // }
@@ -131,7 +125,7 @@ const getCurrentItem = (clickItem: any) => {
 
 //  结合router loader 加载数据
 export async function layoutloader(): Promise<any> {
-  console.log("🚀 ~ file: index.tsx:128 ~ la测试youtloader ~ layoutloader:")
+  // console.log("🚀 ~ file: index.tsx:128 ~ la测试youtloader ~ layoutloader:")
   const valToken = await xzzGetinfo();
   localStorage.setItem('isLogin', valToken.toString())
   if(!valToken){

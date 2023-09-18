@@ -33,8 +33,9 @@ const RolesTable = forwardRef((props:TempProps, ref) => {
       }
   }
 }
-console.log("🚀 ~ file: table.tsx:39 ~ useEffect ~ 执行次数:")
+
 useEffect(() => {
+  console.log("🚀 ~ file: table.tsx:39 ~ useEffect ~ 执行次数:")
   setTableData(rr.rolesData)
     // 监听更新表格事件
      window.emitter.on('updateTable', () => {

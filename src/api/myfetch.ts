@@ -28,10 +28,10 @@ let baseURL: string = 'http://localhost:3000/'
     // referrerPolicy: 'no-referrer-when-downgrade' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 }
 
-//配置认证的标准token
-let token = localStorage.getItem('authToken');
-// console.log("🚀 ~ file: myfetch.ts:33 ~ token:", token)
-if (token) inital.headers = Object.assign(inital.headers, {'Authorization': "bearer " + token})
+// //配置认证的标准token
+// const token = localStorage.getItem('authToken');
+// // console.log("🚀 ~ file: myfetch.ts:33 ~ token:", token)
+// if (token) inital.headers = Object.assign(inital.headers, {'Authorization': "bearer " + token})
 
 // 判断 是否是对象
 const isPlainObject = function isPlainObject(obj:any) {
@@ -48,7 +48,9 @@ const isPlainObject = function isPlainObject(obj:any) {
 
 // -----------------------------发送数据请求-------------------------------
 const xzzfetch = (url: string, config: { [propName: string]: any}) => {
-    return  new Promise((resolve, reject) => {
+    return  new Promise(async (resolve, reject) => {
+
+
 
 
 let {
@@ -59,7 +61,10 @@ let {
     responseType,
 } = Object.assign({}, inital, config);//合并config
 
-
+        //配置认证的标准token
+        const token = await localStorage.getItem('authToken');
+        // console.log("🚀 ~ file: myfetch.ts:33 ~ token:", token)
+        if (token) headers = Object.assign(headers, {'Authorization': "bearer " + token})
 
 // 处理请求主体的数据格式{根据headers中的Content-Type处理成为指定的格式}
 if (body != null) {
