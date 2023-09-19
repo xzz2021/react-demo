@@ -1,17 +1,16 @@
-import {  Button, Checkbox, Col, Form, Input, Modal, Row, message } from 'antd';
+import {  Checkbox, Form, Input, Modal, message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { xzzRegister } from '../../api/userinfo';
-import { getRoleArr, getrole } from '../../api/role';
+import { getRoleArr } from '../../api/role';
 import { modifyuser } from '../../api/user';
 
+
+// 固定数据,最好从父组件传递
 
 const ModifyUser: React.FC = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [roleData, setRoleData] = useState([]);
     
-    // const [selectedRole, setSelectedRole] = useState(false);
-
     const [oldUsername, setOldUsername] = useState('');
     // let oldUsername = ''
     let selectedRole = ''
@@ -20,11 +19,9 @@ const ModifyUser: React.FC = () => {
    
     const handleOk = async () => {
       const { validateFields, getFieldsValue} = modifyuserForm
-      let formObj = getFieldsValue() // 获取表单数据
-      console.log("🚀 ~ file: modifyuser.tsx:17 ~ handleOk ~ formObj:", formObj)
+      // let formObj = getFieldsValue() // 获取表单数据
       try{
         let validation = await  validateFields()  // 如果校验通过  这里也会返回表单数据
-        console.log("🚀 ~ file: modifyuser.tsx:20 ~ handleOk ~ validation:", validation)
         let res: any = await modifyuser({oldUsername,...validation})
         if(res.statusCode === 201){
           // 提交成功
@@ -47,28 +44,24 @@ const ModifyUser: React.FC = () => {
     };
 
     const getAllRoles = async () => {
-        // console.log("🚀 ~ file: table.tsx:29 ~ getAllRoles ~ res:")
         let res: any = await getRoleArr()
         const { data, statusCode } = res
-        // console.log("🚀 ~ file: modifyuser.tsx:45 ~ getAllRoles ~ data:", data)
         if(statusCode === 200) {
             let aa = data.map((item:any) => {
-                if(item == "普通用户") return {label: item, value: item, disabled: true}
+                if(item === "普通用户") return {label: item, value: item, disabled: true}
                return {label: item, value: item}
             })
-            // return
-          setRoleData(aa)
-            
-            
+            setRoleData(aa)
       }else{
         console.log("🚀 ~ file: modifyuser.tsx:49 ~ getAllRoles ~ res:", res)
+        return []
       }
     }
 
     useEffect(() => {
-        getAllRoles()
-        // 监听打开面板事件
-        window.emitter.on('openModifyUserModal', async (record:any) => {
+      getAllRoles()
+      // 监听打开面板事件
+      window.emitter.on('openModifyUserModal', async (record:any) => {
             const { username, role } = record
             // oldUsername = username
             let roleArr = role.split(',')
