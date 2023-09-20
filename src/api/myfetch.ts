@@ -66,6 +66,8 @@ let {
         // console.log("🚀 ~ file: myfetch.ts:33 ~ token:", token)
         if (token) headers = Object.assign(headers, {'Authorization': "bearer " + token})
 
+
+
 // 处理请求主体的数据格式{根据headers中的Content-Type处理成为指定的格式}
 if (body != null) {
     if (isPlainObject(body)) {
