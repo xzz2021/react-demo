@@ -9,6 +9,7 @@ import './index.css'
 import { getKey, getKeyitem } from './getKeyItem';
 import Loading from '../loading';
 import { xzzGetinfo } from '../../api/auth';
+import Userinfo from './userinfo';
 const { Header, Sider, Content } = Layout;
 
 
@@ -90,7 +91,7 @@ const getCurrentItem = (clickItem: any) => {
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', justifyContent: 'space-between' }}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -101,6 +102,7 @@ const getCurrentItem = (clickItem: any) => {
               height: 64,
             }}
           />
+          <Userinfo />
         </Header>
         <Content
           style={{
