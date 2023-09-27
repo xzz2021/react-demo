@@ -1,9 +1,14 @@
 
 import { Button } from 'antd';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Userinfo: React.FC = () => { 
 
+// store.subscribe(() => {
+//   console.log(store.getState())
+// })
+const age  = useSelector((state: any) => state.age)
 
     const logout = () => {
 
@@ -17,7 +22,8 @@ const Userinfo: React.FC = () => {
               width: 64,
               height: 64,
             }}
-          >退出</Button>
+          >退出
+          {age}</Button>
     )
 
 }
