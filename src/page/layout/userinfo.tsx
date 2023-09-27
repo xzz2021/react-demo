@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 
 const Userinfo: React.FC = () => { 
 
-// store.subscribe(() => {
-//   console.log(store.getState())
-// })
+
+// 动态获取store的数据
 const age  = useSelector((state: any) => state.age)
+// console.log("🚀 ~ file: userinfo.tsx:11 ~ age:", age)
 
     const logout = () => {
 
