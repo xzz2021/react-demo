@@ -5,7 +5,7 @@ const initalState = {
 
 export const loginReducer =  (state: any, action: any ) => {
     switch(action.type){
-        case 'addnum':  {
+        case 'addnum3':  {
             let newState = {...state, isLogin: action.value}
             return newState
         };

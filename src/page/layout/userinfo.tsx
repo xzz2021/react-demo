@@ -7,7 +7,7 @@ const Userinfo: React.FC = () => {
 
 
 // 动态获取store的数据
-const age  = useSelector((state: any) => state.age)
+const age  = useSelector((state: any) => state.mainReducer.age)
 // console.log("🚀 ~ file: userinfo.tsx:11 ~ age:", age)
 
     const logout = () => {

@@ -25,7 +25,7 @@ const wait = async (s: number) => {
  
     const clickAdddd =  () => {
       return async (dispatch: any) => {
-       let nn = await wait(3)
+       let nn = await wait(1)
        console.log("🚀 ~ file: index.tsx:26 ~ return ~ nn:", nn)
        dispatch({type: 'addnum'})
      }

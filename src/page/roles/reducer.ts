@@ -5,7 +5,7 @@ const initalState = [{
 
 export const rolesReducer =  (state: any, action: any ) => {
     switch(action.type){
-        case 'addnum':  {
+        case 'addnum222':  {
             let newState = {...state, isLogin: action.value}
             return newState
         };
