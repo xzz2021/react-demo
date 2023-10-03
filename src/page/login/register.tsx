@@ -3,6 +3,7 @@ import React from "react";
 import { Button, Form, Input, message } from "antd";
 
 import { xzzRegister } from "../../api/userinfo";
+import { useDispatch } from "react-redux";
 
 type FieldType = {
   username: string;
@@ -40,6 +41,9 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 // const checkName = (name: string) => {};
+
+const dispatch = useDispatch()
+
 
   return (
     <>
@@ -83,7 +87,7 @@ const onFinishFailed = (errorInfo: any) => {
               注册
             </Button>
             {/* <Link to="/login"> */}
-              <div style={{ margin: "10px", float: "right", cursor: 'pointer' }} onClick={() =>props.changeStatus()}>
+              <div style={{ margin: "10px", float: "right", cursor: 'pointer' }} onClick={() => dispatch({type: 'changePage'})}>
                 去登录
                 {/* <a href="" >
       </a> */}

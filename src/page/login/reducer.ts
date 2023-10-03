@@ -1,11 +1,16 @@
 
 const initalState = {
-    isLogin: false
+    isLoginPage: true,
+    isLogin: false,
 }
 
-export const loginReducer =  (state: any, action: any ) => {
+export const loginReducer =  (state: any = initalState, action: any ) => {
     switch(action.type){
-        case 'addnum3':  {
+        case 'changePage':  {
+            let newState = {isLoginPage: !state.isLoginPage}
+            return newState
+        };
+        case 'changeLoginStatus':  {
             let newState = {...state, isLogin: action.value}
             return newState
         };

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { xzzlogin } from "../../api/userinfo";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 type FieldType = {
   username: string;
@@ -53,6 +54,10 @@ interface RegisterFormProps {
 
   const onFinishFailed = (errorInfo: any) => {
   };
+
+
+const dispatch = useDispatch()
+
   return (
     <>
       {contextHolder}
@@ -98,7 +103,7 @@ interface RegisterFormProps {
             登录
           </Button>
           {/* <Link to='/register'> */}
-          <div style={{ margin: '10px', float: 'right', cursor: 'pointer' }} onClick={() =>props.changeStatus()}>
+          <div style={{ margin: '10px', float: 'right', cursor: 'pointer' }} onClick={() =>dispatch({type: 'changePage'})}>
             注册账号
             {/* <a href="" >注册账号</a> */}
           </div>

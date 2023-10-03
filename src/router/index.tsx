@@ -12,7 +12,7 @@ import { usersloader } from '../page/users';
 // import Users from '../page/users';
 // import Profile from '../page/profile';
 // import NotFound from '../page/error';
-// import Login from '../page/login';
+import Login from '../page/login';
 // import Roles from '../page/roles';
 // import Permissions from '../page/permissions';
 // import Menus from '../page/menus';
@@ -81,7 +81,8 @@ import { usersloader } from '../page/users';
     {
       path: '/login',
       loader: loginloader,
-      Component: lazy(()=> import('../page/login'))
+      // Component: lazy(()=> import('../page/login'))
+      element: <Login />,
     },
     {
       path: '*',

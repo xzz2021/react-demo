@@ -10,6 +10,7 @@ import { getKey, getKeyitem } from './getKeyItem';
 import Loading from '../loading';
 import { xzzGetinfo } from '../../api/auth';
 import Userinfo from './userinfo';
+import { useDispatch } from 'react-redux';
 const { Header, Sider, Content } = Layout;
 
 
@@ -73,6 +74,9 @@ const getCurrentItem = (clickItem: any) => {
 // if (matches.length && !allPath.some(path => matches[matches.length - 1].pathname == path)) {
 //     navigate('/home')
 // }
+
+const dispatch = useDispatch()
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed} theme='light'>
@@ -127,7 +131,6 @@ const getCurrentItem = (clickItem: any) => {
 
 //  结合router loader 加载数据
 export async function layoutloader(): Promise<any> {
-  // console.log("🚀 ~ file: index.tsx:128 ~ la测试youtloader ~ layoutloader:")
   const valToken = await xzzGetinfo();
   localStorage.setItem('isLogin', valToken.toString())
   if(!valToken){
